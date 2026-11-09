@@ -15,8 +15,10 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '9.8.2'
-      - name: Unpack source
-        run: unzip BDSMP-Custom-Menu-1.21.11-source.zip -d mod
+      - name: Download source archive
+        run: curl --fail --location --retry 3 --output BDSMP-Custom-Menu-1.21.11-source.zip https://raw.githubusercontent.com/Shix-0/BDSMP-Custom-Menu-1.21.11/main/BDSMP-Custom-Menu-1.21.11-source.zip
+      - name: Verify and unpack source
+        run: unzip -t BDSMP-Custom-Menu-1.21.11-source.zip && unzip BDSMP-Custom-Menu-1.21.11-source.zip -d mod
       - name: Build mod
         run: gradle -p mod build --no-daemon
       - uses: actions/upload-artifact@v4
